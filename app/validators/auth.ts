@@ -16,10 +16,8 @@ export const createAuthRegisterValidator = vine.compile(
       const user = await User.findBy('email', value)
       return !user
     }),
-    name: vine.string().minLength(2),
-    lastName: vine.string().minLength(2),
     password: vine.string().minLength(5).confirmed({ confirmationField: 'repeat_password'}),
-  }) // todo
+  })
 )
 
 export const createAuthLoginValidator = vine.compile(
