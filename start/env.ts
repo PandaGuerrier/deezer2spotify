@@ -42,5 +42,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SPOTIFY_CLIENT_ID: Env.schema.string(),
-  SPOTIFY_CLIENT_SECRET: Env.schema.string()
+  SPOTIFY_CLIENT_SECRET: Env.schema.string(),
+  SPOTIFY_CLIENT_CALLBACK_URL: Env.schema.string(),
+  DEEZER_CLIENT_ID: Env.schema.string(),
+  DEEZER_CLIENT_SECRET: Env.schema.string(),
+  DEEZER_CLIENT_CALLBACK_URL: Env.schema.string(),
 })

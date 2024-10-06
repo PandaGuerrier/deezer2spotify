@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Original FD'
+const appName = import.meta.env.VITE_APP_NAME || 'Panda <3'
 
 createInertiaApp({
   progress: { color: '#5468FF' },

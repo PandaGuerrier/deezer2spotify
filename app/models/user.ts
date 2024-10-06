@@ -20,6 +20,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare username: string
 
+  @column()
+  declare password: string
+
+  @column()
+  declare rememberMeToken: string | null
+
   // spotify
 
   @column()
@@ -41,7 +47,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare deezerId: string
 
   @column()
-  declare deezerAccessToken: string
+  declare deezerToken: {
+    token: string
+    type: string
+    expiresIn: number
+  }
 
   @column()
   declare deezerRefreshToken: string
