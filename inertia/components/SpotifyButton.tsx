@@ -8,14 +8,14 @@ interface ButtonProps {
   onPress?: () => void
 }
 
-export default function ButtonFD({ name, type, disabled, className, onPress }: ButtonProps) {
+export default function SpotifyButton({ name, type, disabled, className, onPress }: ButtonProps) {
   return (
       <Button
         variant={"solid"}
         type={type}
         name={name}
         disabled={disabled}
-        className={"bg-black dark:bg-white text-white dark:text-black" + className}
+        className={"bg-green-600 " + className}
         radius={"full"}
         onClick={onPress}
       >{name}</Button>

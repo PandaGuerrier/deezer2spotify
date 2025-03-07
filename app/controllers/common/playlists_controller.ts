@@ -35,4 +35,21 @@ export default class PlaylistsController {
 
     return response.redirect('/playlists')
   }
+
+  public async publishToSpotify({ response, auth }: HttpContext) {
+    const user = auth.use('web').user!
+    const spotifyApi = Services.resolve<SpotifyApi>('spotify')
+    const deezerApi = Services.resolve<DeezerApi>('deezer')
+
+    const deezerPlaylist = await deezerApi.getPlaylists(user.deezerToken.token)
+
+    for (const playlistD of deezerPlaylist) {
+      const tracks = await playlistD.getTracks(user.deezerToken.token, user.spotifyToken.token)
+      const playlist = await spotifyApi.createPlaylist(user.spotifyToken.token, playlistD, user.spotifyId)
+
+      await spotifyApi.addTracksToPlaylist(user.spotifyToken.token, playlist, tracks)
+    }
+
+    return response.redirect('/playlists')
+  }
 }

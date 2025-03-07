@@ -10,7 +10,7 @@ export default class Song {
   public static fromArray(array: any[]) {
     return array.map((item) => {
       return new Song(
-        item.id,
+        item.track.id,
         item.name,
       )
     })

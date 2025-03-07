@@ -35,6 +35,7 @@ router.group(() => {
 
   router.group(() => {
     router.get('/delete', [PlaylistsController, 'deleteDeezer'])
+    router.get('/publish', [PlaylistsController, 'publishToSpotify'])
   }).prefix('deezer').middleware(middleware.auth())
 
 }).use(middleware.auth()).prefix('playlists')

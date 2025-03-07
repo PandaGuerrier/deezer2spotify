@@ -8,6 +8,10 @@ export default class DeezerApi extends Http {
     })
     const payload = await response.json()
 
+    console.log("-------------- body deezer  --------------")
+    console.log(payload)
+    console.log("-------------- body deezer fin --------------")
+
     // @ts-ignore
     return DeezerPlaylist.fromArray(payload.data)
   }
@@ -16,7 +20,9 @@ export default class DeezerApi extends Http {
     const playlists = await this.getPlaylists(accessToken)
 
     for (const playlist of playlists) {
-      const response = await this.delete(`/user/me/playlists?access_token=${accessToken}&playlist_id=${playlist.id}`)
+      const response = await this.delete(`/user/me/playlists?access_token=${accessToken}&playlist_id=${playlist.id}`, {
+        Authorization: accessToken
+      }, {})
       const payload = await response.json()
 
       console.log(payload)

@@ -27,7 +27,7 @@ export default function Home() {
         <div className="font-extralight text-base md:text-4xl dark:text-neutral-200 py-4">
           L'outil <span className={"bg-gradient-to-r from-[#9648FC] to-[#1ed760] bg-clip-text text-transparent font-bold"}>gratuit</span> pour transférer vos playlists Deezer vers Spotify.
         </div>
-        <SpotifyButton type={'button'} name={'Commencer maintenant !'} onPress={onPress} />
+        <SpotifyButton type={'button'} name={'Commencer dès maintenant !'} onPress={onPress} />
       </motion.div>
     </AuroraBackground>
   )

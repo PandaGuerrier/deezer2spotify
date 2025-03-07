@@ -1,6 +1,7 @@
 import Http from '../contracts/http.js'
 import SpotifyPlaylist from '#services/objects/spotify_playlist'
 import Song from '#services/objects/song'
+import DeezerPlaylist from '#services/objects/deezer_playlist'
 
 export default class SpotifyApi extends Http {
   public async getPlaylists(accessToken: string) {
@@ -14,21 +15,21 @@ export default class SpotifyApi extends Http {
   }
 
   public async getTracks(accessToken: string, playlist: SpotifyPlaylist) {
-      const pages = Math.ceil(playlist.tracks / 50)
-      const tracks = []
+    const pages = Math.ceil(playlist.tracks / 50)
+    const tracks = []
     console.log(accessToken)
 
     console.log(pages)
 
-      for (let i = 0; i < pages; i++) {
-        console.log(i)
-        const response = await this.get(`/playlists/${playlist.id}/tracks?fields=total&limit=50`, {
-          Authorization: `Bearer ${accessToken}`
-        })
-        const payload = await response.json() as any
-        console.log(`Page ${i + 1}`)
-        console.log(payload)
-        tracks.push(...payload.items)
+    for (let i = 0; i < pages; i++) {
+      console.log(i)
+      const response = await this.get(`/playlists/${playlist.id}/tracks?limit=50`, {
+        Authorization: `Bearer ${accessToken}`
+      })
+      const payload = await response.json() as any
+      console.log(`Page ${i + 1}`)
+      console.log(payload)
+      tracks.push(...payload.items)
     }
 
     return Song.fromArray(tracks)
@@ -46,6 +47,9 @@ export default class SpotifyApi extends Http {
           }
         })
       }
+      console.log("-------------- body --------------")
+      console.log(body)
+      console.log("-------------- body fin --------------")
 
       const response = await this.delete(`/playlists/${playlist.id}/tracks`, {
           Authorization: `Bearer ${accessToken}`
@@ -57,6 +61,45 @@ export default class SpotifyApi extends Http {
       const payload = await response.json()
       console.log(payload)
     }
+  }
+
+  public async createPlaylist(accessToken: string, deezerPlaylist: DeezerPlaylist, userId: string) {
+    const response = await this.post(`/users/${userId}/playlists`, {
+      name: deezerPlaylist.title,
+      public: deezerPlaylist.public,
+      description: "Playlist created from Deezer, thanks Jules :D !"
+    }, {
+      Authorization: `Bearer ${accessToken}`
+    })
+
+    const payload: any = await response.json()
+    console.log(payload)
+
+    return payload.id
+  }
+
+  public async getSongFromName(accessToken: string, name: string): Promise<string> {
+    const response = await this.get(`/search?q=${name}&type=track&limit=1`, {
+      Authorization: `Bearer ${accessToken}`
+    })
+
+    const payload: any = await response.json()
+    console.log(payload)
+
+    return payload.tracks.items[0].id
+  }
+
+  public async addTracksToPlaylist(accessToken: string, playlistId: string, tracks: string[]) {
+    const body = {
+      uris: tracks.map((track) => `spotify:track:${track}`)
+    }
+
+    const response = await this.post(`/playlists/${playlistId}/tracks`, body, {
+      Authorization: `Bearer ${accessToken}`
+    })
+
+    const payload = await response.json()
+    console.log(payload)
   }
 }
 
