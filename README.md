@@ -1,3 +1,3 @@
-# originalFD
 # deezer2spotify
-# ExoMaster
+
+Projet abandonné car l'api de spotify & deezer sont pas performante pour cela....
